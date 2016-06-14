@@ -1,0 +1,64 @@
+pkgbase=pycrypto
+pkgname=("python2-${pkgbase}" "python3-${pkgbase}")
+pkgver=2.6.1
+pkgrel=1
+pkgdesc="Cryptographic modules for Python."
+arch=('i686' 'x86_64')
+license=('Public domain')
+url="https://pypi.python.org/pypi/pycrypto"
+makedepends=(
+    'python2' 'python3'
+    'python2-setuptools' 'python3-setuptools'
+    'gmp-devel'
+)    
+source=(
+    "https://pypi.python.org/packages/60/db/645aa9af249f059cc3a368b118de33889219e0362141e75d4eaf6f80f163/pycrypto-2.6.1.tar.gz"
+    '01-fix_includes.patch'
+)
+sha256sums=(
+    'f2ce1e989b272cfcb677616763e0a2e7ec659effa67a88aa92b3a65528f60a3c'
+    '36af61b84572a9eee0621545cfd0abe196f08ad291249cbb3d74f6c9204332b6'
+)
+
+prepare() {
+  cd "${srcdir}/${pkgbase}-${pkgver}"
+  patch -p1 -i ../01-fix_includes.patch
+
+  cd "${srcdir}"
+  for builddir in python{2,3}-build; do
+    rm -rf $builddir
+    cp -r ${pkgbase}-${pkgver} $builddir
+  done
+}
+
+build() {
+  for builddir in python{2,3}-build; do
+    cd "${srcdir}/${builddir}"
+    "/usr/bin/${builddir%-build}" setup.py build
+  done
+}
+
+package() {
+  local n=$1
+
+  depends=(
+    "python${n}"
+    'gmp'
+  )
+
+  cd "${srcdir}/python${n}-build"
+  "/usr/bin/python${n}" setup.py install \
+    --prefix=/usr \
+    --root="${pkgdir}" \
+    --optimize=1
+
+  install -Dm644 "${srcdir}/${pkgbase}-${pkgver}/COPYRIGHT" \
+    "${pkgdir}/usr/share/licenses/python${n}-${pkgbase}/COPYRIGHT"
+}
+
+package_python2-pycrypto() {
+  package 2
+}
+package_python3-pycrypto() {
+  package 3
+}

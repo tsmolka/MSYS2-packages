@@ -1,0 +1,174 @@
+diff -ruN pycrypto-2.6.1-orig/src/_counter.c pycrypto-2.6.1/src/_counter.c
+--- pycrypto-2.6.1-orig/src/_counter.c	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/_counter.c	2016-06-14 18:33:26.177946400 +0200
+@@ -22,10 +22,10 @@
+  * ===================================================================
+  */
+ 
++#include <Python.h>
+ #include <assert.h>
+ #include <stddef.h>
+ #include <string.h>
+-#include "Python.h"
+ #include "pycrypto_compat.h"
+ #include "_counter.h"
+ 
+diff -ruN pycrypto-2.6.1-orig/src/_fastmath.c pycrypto-2.6.1/src/_fastmath.c
+--- pycrypto-2.6.1-orig/src/_fastmath.c	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/_fastmath.c	2016-06-14 20:38:39.532346900 +0200
+@@ -26,9 +26,9 @@
+  * $Id$
+  */
+ 
++#include <Python.h>
+ #include <stdio.h>
+ #include <string.h>
+-#include "Python.h"
+ #include "pycrypto_compat.h"
+ #include <longintrepr.h>				/* for conversions */
+ #include "config.h"
+diff -ruN pycrypto-2.6.1-orig/src/AES.c pycrypto-2.6.1/src/AES.c
+--- pycrypto-2.6.1-orig/src/AES.c	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/AES.c	2016-06-14 18:29:44.434263300 +0200
+@@ -24,9 +24,9 @@
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  */
+ 
++#include <Python.h>
+ #include <assert.h>
+ #include <stdlib.h>
+-#include "Python.h"
+ 
+ #define MODULE_NAME _AES
+ #define BLOCK_SIZE 16
+diff -ruN pycrypto-2.6.1-orig/src/ARC2.c pycrypto-2.6.1/src/ARC2.c
+--- pycrypto-2.6.1-orig/src/ARC2.c	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/ARC2.c	2016-06-14 18:30:28.434780000 +0200
+@@ -41,8 +41,8 @@
+  *
+  */
+ 
++#include <Python.h>
+ #include <string.h>  
+-#include "Python.h"
+ 
+ #define MODULE_NAME _ARC2
+ #define BLOCK_SIZE 8
+diff -ruN pycrypto-2.6.1-orig/src/Blowfish.c pycrypto-2.6.1/src/Blowfish.c
+--- pycrypto-2.6.1-orig/src/Blowfish.c	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/Blowfish.c	2016-06-14 18:31:07.266001000 +0200
+@@ -26,6 +26,7 @@
+  * http://www.schneier.com/paper-blowfish-fse.html
+  */
+ 
++#include <Python.h>
+ #include "config.h"
+ #if HAVE_STDINT_H
+ # include <stdint.h>
+@@ -36,7 +37,6 @@
+ #endif
+ #include <assert.h>
+ #include <string.h>
+-#include "Python.h"
+ 
+ #include "Blowfish-tables.h"
+ 
+diff -ruN pycrypto-2.6.1-orig/src/CAST.c pycrypto-2.6.1/src/CAST.c
+--- pycrypto-2.6.1-orig/src/CAST.c	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/CAST.c	2016-06-14 18:27:20.802048000 +0200
+@@ -42,7 +42,7 @@
+ 
+ */
+ 
+-#include "Python.h"
++#include <Python.h>
+ 
+ #define MODULE_NAME _CAST
+ #define BLOCK_SIZE 8
+diff -ruN pycrypto-2.6.1-orig/src/DES.c pycrypto-2.6.1/src/DES.c
+--- pycrypto-2.6.1-orig/src/DES.c	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/DES.c	2016-06-14 18:31:53.329635700 +0200
+@@ -28,13 +28,13 @@
+  * assert-like LTC_ARGCHK macro fails. */
+ #define ARGTYPE 4
+ 
++#include <Python.h>
+ /* Include the actial DES implementation */
+ #include "libtom/tomcrypt_des.c"
+ 
+ #undef DES  /* this is needed because tomcrypt_custom.h defines DES to an empty string */
+ 
+ #include <assert.h>
+-#include "Python.h"
+ 
+ typedef struct {
+     symmetric_key sk;
+diff -ruN pycrypto-2.6.1-orig/src/hash_SHA2.h pycrypto-2.6.1/src/hash_SHA2.h
+--- pycrypto-2.6.1-orig/src/hash_SHA2.h	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/hash_SHA2.h	2016-06-14 18:29:02.720877500 +0200
+@@ -26,6 +26,8 @@
+ #ifndef __HASH_SHA2_H
+ #define __HASH_SHA2_H
+ 
++#include <Python.h>
++
+ /* check if implementation set the correct macros */
+ #ifndef MODULE_NAME
+ #error SHA2 Implementation must define MODULE_NAME before including this header
+diff -ruN pycrypto-2.6.1-orig/src/MD2.c pycrypto-2.6.1/src/MD2.c
+--- pycrypto-2.6.1-orig/src/MD2.c	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/MD2.c	2016-06-14 18:25:39.940279100 +0200
+@@ -27,8 +27,8 @@
+  */
+   
+ 
++#include <Python.h>
+ #include <string.h>
+-#include "Python.h"
+ #include "pycrypto_compat.h"
+ 
+ #define MODULE_NAME _MD2
+diff -ruN pycrypto-2.6.1-orig/src/MD4.c pycrypto-2.6.1/src/MD4.c
+--- pycrypto-2.6.1-orig/src/MD4.c	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/MD4.c	2016-06-14 18:26:26.995970500 +0200
+@@ -27,8 +27,8 @@
+  */
+   
+ 
++#include <Python.h>
+ #include <string.h>
+-#include "Python.h"
+ #include "pycrypto_compat.h"
+ 
+ #define MODULE_NAME _MD4
+diff -ruN pycrypto-2.6.1-orig/src/pycrypto_compat.h pycrypto-2.6.1/src/pycrypto_compat.h
+--- pycrypto-2.6.1-orig/src/pycrypto_compat.h	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/pycrypto_compat.h	2016-06-14 20:41:48.341260800 +0200
+@@ -23,7 +23,7 @@
+  */
+ #ifndef PYCRYPTO_COMPAT_H
+ #define PYCRYPTO_COMPAT_H
+-#include "Python.h"
++#include <Python.h>
+ 
+ /*
+  * Python 3.x defines, for conditional compiles
+diff -ruN pycrypto-2.6.1-orig/src/RIPEMD160.c pycrypto-2.6.1/src/RIPEMD160.c
+--- pycrypto-2.6.1-orig/src/RIPEMD160.c	2013-10-14 23:38:10.000000000 +0200
++++ pycrypto-2.6.1/src/RIPEMD160.c	2016-06-14 18:26:44.721984400 +0200
+@@ -43,6 +43,7 @@
+  *   "RIPEMD-160 is big-bit-endian, little-byte-endian, and left-justified."
+  */
+ 
++#include <Python.h>
+ #include "config.h"
+ #if HAVE_STDINT_H
+ # include <stdint.h>
+@@ -54,7 +55,6 @@
+ 
+ #include <assert.h>
+ #include <string.h>
+-#include "Python.h"
+ #include "pycrypto_compat.h"
+ 
+ #define RIPEMD160_DIGEST_SIZE 20
